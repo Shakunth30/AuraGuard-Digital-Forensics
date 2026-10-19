@@ -1,0 +1,57 @@
+{
+  "project": {
+    "name": "AuraGuard",
+    "description": "Zero-Trust Autonomous Cloud Forensic Isolation & Cryptographic Evidence Vault",
+    "version": "1.0.0",
+    "environment": "production"
+  },
+  "aws": {
+    "default_region": "ap-south-1",
+    "vpc": {
+      "name": "AuraGuard-Prod-vpc",
+      "cidr_block": "10.0.0.0/16",
+      "id": "vpc-xxxxxxxxxxxxxxxxx"
+    },
+    "subnets": {
+      "public_subnet_1": {
+        "name": "AuraGuard-Prod-subnet-public1",
+        "cidr_block": "10.0.0.0/24",
+        "availability_zone": "ap-south-1a",
+        "id": "subnet-xxxxxxxxxxxxxxxxx"
+      }
+    }
+  },
+  "quarantine_security_group": {
+    "group_name": "AuraGuard-Quarantine-SG",
+    "description": "Zero-Trust Forensic Isolation Security Group - Total Blackhole (0 ingress, 0 egress)",
+    "tags": {
+      "Name": "AuraGuard-Quarantine-SG",
+      "Role": "Forensic-Isolation",
+      "ManagedBy": "AuraGuard",
+      "SecurityZone": "Quarantine"
+    }
+  },
+  "evidence_vault": {
+    "s3_bucket_prefix": "auraguard-evidence-vault",
+    "cryptographic_hash_algorithm": "SHA-256",
+    "kms_key_alias": "alias/auraguard-evidence-vault-key",
+    "ebs_snapshot_prefix": "AuraGuard-Forensic-Snapshot",
+    "snapshot_retention_days": 365,
+    "chain_of_custody_enabled": true
+  },
+  "autonomous_response": {
+    "create_ebs_snapshots": true,
+    "strip_iam_instance_profile": true,
+    "replace_security_groups": true,
+    "stop_instance_on_isolation": false,
+    "enable_metadata_token_v2_required": true,
+    "notify_sns": true
+  },
+  "tags": {
+    "Project": "AuraGuard",
+    "SecurityLevel": "Critical",
+    "ForensicStatusKey": "AuraGuard-Status",
+    "ForensicStatusQuarantined": "QUARANTINED",
+    "ForensicCaseIdKey": "AuraGuard-Case-ID"
+  }
+}

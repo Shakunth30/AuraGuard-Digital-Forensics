@@ -1,0 +1,83 @@
+{
+  "infrastructure_metadata": {
+    "project": "AuraGuard",
+    "architecture_tier": "Foundational Network Infrastructure",
+    "region": "ap-south-1",
+    "region_name": "Asia Pacific (Mumbai)",
+    "status": "PROVISIONED"
+  },
+  "vpc": {
+    "name": "AuraGuard-Prod-vpc",
+    "id": "vpc-xxxxxxxxxxxxxxxxx",
+    "cidr_block": "10.0.0.0/16",
+    "instance_tenancy": "default",
+    "enable_dns_support": true,
+    "enable_dns_hostnames": true,
+    "tags": {
+      "Name": "AuraGuard-Prod-vpc",
+      "Environment": "Production",
+      "Project": "AuraGuard",
+      "ZeroTrustScaffold": "True"
+    }
+  },
+  "subnets": [
+    {
+      "name": "AuraGuard-Prod-subnet-public1",
+      "id": "subnet-xxxxxxxxxxxxxxxxx",
+      "cidr_block": "10.0.0.0/24",
+      "availability_zone": "ap-south-1a",
+      "map_public_ip_on_launch": true,
+      "type": "public",
+      "tags": {
+        "Name": "AuraGuard-Prod-subnet-public1",
+        "Environment": "Production",
+        "Tier": "Public-Workload",
+        "Project": "AuraGuard"
+      }
+    }
+  ],
+  "internet_gateway": {
+    "name": "AuraGuard-Prod-igw",
+    "id": "igw-xxxxxxxxxxxxxxxxx",
+    "attached_vpc_id": "vpc-xxxxxxxxxxxxxxxxx"
+  },
+  "route_tables": [
+    {
+      "name": "AuraGuard-Prod-public-rt",
+      "id": "rtb-xxxxxxxxxxxxxxxxx",
+      "associated_subnets": [
+        "subnet-xxxxxxxxxxxxxxxxx"
+      ],
+      "routes": [
+        {
+          "destination_cidr_block": "10.0.0.0/16",
+          "target": "local"
+        },
+        {
+          "destination_cidr_block": "0.0.0.0/0",
+          "target": "igw-xxxxxxxxxxxxxxxxx"
+        }
+      ]
+    }
+  ],
+  "quarantine_network_acl": {
+    "name": "AuraGuard-Quarantine-Emergency-NACL",
+    "description": "Stateless zero-trust emergency network blackhole ACL",
+    "ingress": [
+      {
+        "rule_number": 100,
+        "protocol": "-1",
+        "rule_action": "deny",
+        "cidr_block": "0.0.0.0/0"
+      }
+    ],
+    "egress": [
+      {
+        "rule_number": 100,
+        "protocol": "-1",
+        "rule_action": "deny",
+        "cidr_block": "0.0.0.0/0"
+      }
+    ]
+  }
+}
