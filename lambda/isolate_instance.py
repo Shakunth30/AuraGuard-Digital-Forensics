@@ -203,11 +203,25 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         block_devices = instance.get("BlockDeviceMappings", [])
         iam_profile = instance.get("IamInstanceProfile")
 
-        # Step 3: Snapshot EBS volumes before network cutoff
+        # Idempotency Guard: prevent redundant snapshotting or re-isolation if already quarantined
+        instance_tags = {t["Key"]: t["Value"] for t in instance.get("Tags", [])}
+        quarantine_sg_id = QUARANTINE_SG_ID if QUARANTINE_SG_ID else get_or_create_quarantine_sg(vpc_id)
+        if instance_tags.get("AuraGuard-Status") == "QUARANTINED" and original_sgs == [quarantine_sg_id]:
+            existing_case = instance_tags.get("AuraGuard-Case-ID", case_id)
+            logger.info(f"Idempotency: Instance {instance_id} is already quarantined under Case {existing_case}. Skipping duplicate isolation.")
+            return {
+                "statusCode": 200,
+                "status": "ALREADY_QUARANTINED",
+                "case_id": existing_case,
+                "instance_id": instance_id,
+                "quarantine_sg": quarantine_sg_id,
+                "message": "Instance is already quarantined under Zero-Trust policy."
+            }
+
+        # Step 3: Snapshot EBS volumes before network cutoff (preserves in-flight disk state)
         snapshot_records = acquire_volume_snapshots(instance_id, case_id, block_devices)
 
-        # Step 4: Zero-Trust Network Isolation (Blackhole)
-        quarantine_sg_id = QUARANTINE_SG_ID if QUARANTINE_SG_ID else get_or_create_quarantine_sg(vpc_id)
+        # Step 4: Zero-Trust Network Isolation (Blackhole: 0 ingress, 0 egress)
         ec2_client.modify_instance_attribute(
             InstanceId=instance_id,
             Groups=[quarantine_sg_id]
@@ -215,6 +229,10 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         logger.info(f"Instance {instance_id} isolated with quarantine security group {quarantine_sg_id}")
 
         # Step 5: IAM Credential Neutralization
+        # SECURITY NOTICE: Disassociating the instance profile stops the IMDS endpoint from issuing
+        # new credentials. However, active temporary STS credentials already issued prior to detachment
+        # remain valid until their expiration (typically up to 6 hours). In high-assurance environments,
+        # attach an inline policy with an aws:TokenIssueTime condition to revoke existing sessions immediately.
         iam_neutralized = False
         if iam_profile and "AssociationId" in iam_profile:
             try:
