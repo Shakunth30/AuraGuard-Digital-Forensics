@@ -1,0 +1,29 @@
+# Environment and Secrets
+.env
+*.pem
+*.key
+credentials/
+aws_credentials.json
+
+# Python Virtual Environments & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Evidence & Local Artifacts
+evidence/*.json
+evidence/raw/
+!evidence/.gitkeep
+*.log
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
