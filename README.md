@@ -230,5 +230,108 @@ python -c "import json, hashlib; data=json.load(open('evidence/AuraGuard_Forensi
 
 ---
 
+---
+
+## 🖥️ AuraGuard Command Center (Web UI & Live Dashboard)
+
+A cinematic, award-level web application and live operations dashboard built with **Vite, React 18, TypeScript, Tailwind CSS, and Three.js (React Three Fiber)**.
+
+### Design Concept: "Aurora Glass"
+- **Aesthetic**: Night-sky fortress aesthetic inspired by the northern lights. Represents a living digital shield protecting cloud workloads.
+- **Color System**:
+  - **Base Void**: `#05070F`, Deep Layer `#0B1020`, Elevated `#121A33`
+  - **Aurora Teal** (`#2EF2C0` → `#19B8A6`): Normal production & healthy status
+  - **Aurora Violet** (`#8B6CFF` → `#C4A8FF`): Cryptographic evidence & S3 vaulting
+  - **Ice Blue** (`#7CC4FF`): Telemetry & cloud infrastructure metadata
+  - **Ember Coral** (`#FF4D5E` → `#FF8A5B`): Reserved strictly for active adversary threats
+- **Typography (Self-Hosted via `@fontsource`, SIL Open Font License OFL)**:
+  - **Display / Logo / Key Metrics**: Orbitron (Weights 600, 800)
+  - **Headings & UI Labels**: Chakra Petch (Weights 500, 700) with uppercase cyber tracking (`0.08em` - `0.12em`)
+  - **Body UI**: IBM Plex Sans (Weights 400, 500)
+  - **Data, Hashes, Logs, & Timestamps**: JetBrains Mono (Weights 400, 500, 700) with tabular numbers
+- **Glassmorphism**: High-performance backdrop blur (22px), 1px gradient borders, soft reactive glows, and floating 3D parallax.
+
+---
+
+### Environment Variables Catalog
+
+Refer to [`.env.example`](.env.example) for the full configuration template:
+
+| Variable | Scope | Description | Default / Example |
+| :--- | :--- | :--- | :--- |
+| `AWS_REGION` | Server & Scripts | Target AWS region | `ap-south-1` |
+| `AWS_ACCESS_KEY_ID` | Server & Scripts | IAM Access Key ID | `AKIAEXAMPLEACCESSKEY` |
+| `AWS_SECRET_ACCESS_KEY` | Server & Scripts | IAM Secret Access Key | *(Masked)* |
+| `VPC_ID` | Server & Scripts | Target VPC identifier | `vpc-0xxxxxxxxxxxxxxxxx` |
+| `SUBNET_ID` | Server & Scripts | Target Subnet identifier | `subnet-0xxxxxxxxxxxxxxxxx` |
+| `TARGET_INSTANCE_ID` | Server & Scripts | Protected EC2 Instance ID | `i-0xxxxxxxxxxxxxxxxx` |
+| `QUARANTINE_SG_ID` | Server & Lambda | Optional pre-provisioned quarantine SG ID | `sg-0xxxxxxxxxxxxxxxxx` |
+| `QUARANTINE_SG_NAME` | Server & Lambda | Dynamic discovery/creation SG name | `AuraGuard-Quarantine-SG` |
+| `EVIDENCE_VAULT_BUCKET` | Server & Lambda | S3 Evidence Vault bucket name | `auraguard-evidence-vault-sample` |
+| `SERVER_HOST` | FastAPI Server | Local bind host | `127.0.0.1` |
+| `SERVER_PORT` | FastAPI Server | Local bind port | `8000` |
+
+---
+
+### Running the Command Center
+
+#### 1. Start the Backend API (FastAPI)
+```powershell
+python -m uvicorn server.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+#### 2. Start the Frontend (Vite)
+```powershell
+npm run dev
+```
+Open **`http://localhost:5173`** in your browser.
+
+---
+
+### Demo Mode vs. Live AWS Mode
+- **Demo Mode (Default & Zero-AWS Dependency)**: Replays realistic scripted incident data based on Case `AG-20261019-30ECB6`, target instance `i-04c26f6ddf34068ca`, snapshot `snap-016635bad8c1227f5`, and cryptographic hash `5bbf4582f66beed5...`. Allows 100% offline testing and presentation without incurring AWS costs or requiring active cloud connectivity.
+- **Live AWS Mode**: Toggle the **`DEMO MODE / LIVE AWS`** pill in the top navigation bar. When active, API calls interact directly with AWS `ap-south-1` via server-side Boto3 without ever exposing AWS credentials to the browser.
+
+---
+
+### Interactive Features & Key Components
+1. **Interactive 3D Hero Scene**: Floating glass EC2 cube inside a hexagonal shield lattice. Reacts dynamically to threat states (turns coral during attacks and seals inside a teal shockwave with orbiting violet custody orb upon containment).
+2. **RAM Preservation Toggle**: Interactive matrix comparing traditional destructive server termination against AuraGuard's live-memory blackhole.
+3. **5-Layer Architecture Inspector**: Interactive diagram detailing Detection, EventBridge, Lambda, Zero-Trust SG, and S3 Vault with direct code snippets.
+4. **Sub-Second Containment Stepper**: Displays millisecond progression from threat ingestion ($T+0.00\text{s}$) to S3 vaulting ($T+1.72\text{s}$).
+5. **In-Browser Web Crypto Hash Verification**: Validates the SHA-256 seal live using the browser's SubtleCrypto API. Includes a **"Simulate Manifest Tamper"** button to prove detection of altered evidence.
+6. **Faculty Presentation Mode (Press `P`)**: Fullscreen, clutter-free guided tour with on-screen narration scripts designed specifically for academic evaluation.
+
+---
+
+### Presentation Screenshot Checklist
+- [ ] **Landing Page**: 3D glass cube with glowing aurora particles and "Contain the breach before the breach finishes" headline.
+- [ ] **RAM Preservation Comparison**: Side-by-side matrix showing 100% volatile memory survival vs. traditional 0%.
+- [ ] **Interactive Architecture Drawer**: Selected Lambda node showing backend Python isolation handler.
+- [ ] **Live Dashboard (Healthy)**: Target node `i-04c26f6ddf34068ca` in normal state with active security groups.
+- [ ] **Under Attack State**: Red coral glow with active MITRE C2 exfiltration telemetry.
+- [ ] **Quarantined State**: Teal-violet locked state with 100% completed EBS snapshot progress bar.
+- [ ] **Web Crypto Hash Verification**: "VERIFIED GENUINE" green seal alongside "TAMPER DETECTED (MISMATCH)" demonstration.
+- [ ] **Faculty Defense Mode (`P`)**: Presenter cue card with scripted talking points.
+
+---
+
+## 🔒 Security & Known Limitations
+See [`SECURITY.md`](SECURITY.md) for full vulnerability disclosure policy and threat model.
+- **IMDSv2 Session Token Invalidation**: Disassociating the IAM instance profile prevents new tokens from being issued. To immediately revoke pre-existing STS tokens, apply [`infra/iam_session_revocation_policy.json`](infra/iam_session_revocation_policy.json) with `aws:TokenIssueTime`.
+
+---
+
+## 📜 Font & Asset Credits
+All fonts are open-source and bundled locally via Fontsource:
+- **Orbitron**: Designed by Matt McInerney ([SIL Open Font License 1.1](https://scripts.sil.org/OFL))
+- **Chakra Petch**: Designed by Cadson Demak ([SIL Open Font License 1.1](https://scripts.sil.org/OFL))
+- **IBM Plex Sans**: Designed by Mike Abbink / Bold Monday ([SIL Open Font License 1.1](https://scripts.sil.org/OFL))
+- **JetBrains Mono**: Designed by JetBrains ([SIL Open Font License 1.1](https://scripts.sil.org/OFL))
+
+---
+
 ## 🛡️ License
-Distributed under the **Apache 2.0 License**. See `LICENSE` for more information.
+Distributed under the **Apache 2.0 License**. See [`LICENSE`](LICENSE) for more information.
+
+
