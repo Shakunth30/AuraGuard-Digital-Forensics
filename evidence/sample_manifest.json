@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "case_id": "AG-CASE-SAMPLE01",
+  "incident_type": "AUTONOMOUS_SERVERLESS_QUARANTINE",
+  "timestamp": "2026-10-19T12:00:00.000000+00:00",
+  "region": "ap-south-1",
+  "target": {
+    "instance_id": "i-0xxxxxxxxxxxxxxxxx",
+    "vpc_id": "vpc-0xxxxxxxxxxxxxxxxx",
+    "subnet_id": "subnet-0xxxxxxxxxxxxxxxxx",
+    "original_security_groups": [
+      "sg-0xxxxxxxxxxxxxxxxx"
+    ],
+    "quarantine_security_group": "sg-0yyyyyyyyyyyyyyyyy"
+  },
+  "evidence": {
+    "ebs_snapshots": [
+      {
+        "volume_id": "vol-0xxxxxxxxxxxxxxxxx",
+        "snapshot_id": "snap-0xxxxxxxxxxxxxxxxx",
+        "timestamp": "2026-10-19T12:00:01.000000+00:00",
+        "status": "completed"
+      }
+    ],
+    "iam_neutralized": true,
+    "forensic_status": "QUARANTINED"
+  },
+  "target_instance_id": "i-0xxxxxxxxxxxxxxxxx",
+  "vpc_id": "vpc-0xxxxxxxxxxxxxxxxx",
+  "quarantined_by_sg": "sg-0yyyyyyyyyyyyyyyyy",
+  "forensic_snapshot_id": "snap-0xxxxxxxxxxxxxxxxx",
+  "sha256_integrity_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cryptographic_hash_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "sha256_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
