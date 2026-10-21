@@ -123,8 +123,8 @@ cp .env.example .env
 Edit `.env`:
 ```env
 AWS_REGION=ap-south-1
-AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=your_secret_access_key
+AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID>
+AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
 VPC_ID=vpc-xxxxxxxxxxxxxxxxx
 SUBNET_ID=subnet-xxxxxxxxxxxxxxxxx
 TARGET_INSTANCE_ID=i-xxxxxxxxxxxxxxxxx
@@ -260,8 +260,8 @@ Refer to [`.env.example`](.env.example) for the full configuration template:
 | Variable | Scope | Description | Default / Example |
 | :--- | :--- | :--- | :--- |
 | `AWS_REGION` | Server & Scripts | Target AWS region | `ap-south-1` |
-| `AWS_ACCESS_KEY_ID` | Server & Scripts | IAM Access Key ID | `AKIAEXAMPLEACCESSKEY` |
-| `AWS_SECRET_ACCESS_KEY` | Server & Scripts | IAM Secret Access Key | *(Masked)* |
+| `AWS_ACCESS_KEY_ID` | Server & Scripts | IAM Access Key ID | `<YOUR_AWS_ACCESS_KEY_ID>` |
+| `AWS_SECRET_ACCESS_KEY` | Server & Scripts | IAM Secret Access Key | `<YOUR_AWS_SECRET_ACCESS_KEY>` |
 | `VPC_ID` | Server & Scripts | Target VPC identifier | `vpc-0xxxxxxxxxxxxxxxxx` |
 | `SUBNET_ID` | Server & Scripts | Target Subnet identifier | `subnet-0xxxxxxxxxxxxxxxxx` |
 | `TARGET_INSTANCE_ID` | Server & Scripts | Protected EC2 Instance ID | `i-0xxxxxxxxxxxxxxxxx` |
