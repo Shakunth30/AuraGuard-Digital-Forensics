@@ -1,0 +1,20 @@
+# ==============================================================================
+# AuraGuard: Gitleaks Configuration
+# Extends default secret detection ruleset with narrow allowlist for placeholders
+# ==============================================================================
+
+title = "AuraGuard Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlist exact safe placeholder values used in .env.example"
+stopwords = [
+    "<YOUR_AWS_ACCESS_KEY_ID>",
+    "<YOUR_AWS_SECRET_ACCESS_KEY>",
+]
+regexes = [
+    '''<YOUR_AWS_ACCESS_KEY_ID>''',
+    '''<YOUR_AWS_SECRET_ACCESS_KEY>''',
+]
