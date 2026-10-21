@@ -113,7 +113,7 @@ index d5457af..a37868b 100644
  
  # 1. AWS Credentials & Regional Target (Required for Live AWS Mode)
  AWS_REGION=ap-south-1
--AWS_ACCESS_KEY_ID=AKIAEXAMPLEACCESSKEY
+-AWS_ACCESS_KEY_ID=AKIA****
 -AWS_SECRET_ACCESS_KEY=exampleSecretKeyDoNotCommitToGit12345
 +AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID>
 +AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
@@ -196,7 +196,7 @@ index 9e877e6..6ca6ac9 100644
  Edit `.env`:
  ```env
  AWS_REGION=ap-south-1
--AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXX
+-AWS_ACCESS_KEY_ID=AKIA****
 -AWS_SECRET_ACCESS_KEY=your_secret_access_key
 +AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID>
 +AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
@@ -207,7 +207,7 @@ index 9e877e6..6ca6ac9 100644
  | Variable | Scope | Description | Default / Example |
  | :--- | :--- | :--- | :--- |
  | `AWS_REGION` | Server & Scripts | Target AWS region | `ap-south-1` |
--| `AWS_ACCESS_KEY_ID` | Server & Scripts | IAM Access Key ID | `AKIAEXAMPLEACCESSKEY` |
+-| `AWS_ACCESS_KEY_ID` | Server & Scripts | IAM Access Key ID | `AKIA****` |
 -| `AWS_SECRET_ACCESS_KEY` | Server & Scripts | IAM Secret Access Key | *(Masked)* |
 +| `AWS_ACCESS_KEY_ID` | Server & Scripts | IAM Access Key ID | `<YOUR_AWS_ACCESS_KEY_ID>` |
 +| `AWS_SECRET_ACCESS_KEY` | Server & Scripts | IAM Secret Access Key | `<YOUR_AWS_SECRET_ACCESS_KEY>` |

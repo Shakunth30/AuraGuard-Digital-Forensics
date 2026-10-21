@@ -6,3 +6,8 @@ e9c8339932d539fb29c67ba1dffe825f571bca6a:.env.example:aws-access-token:9
 
 # Historical finding in README.md: documentation catalog example placeholder (inactive/rotated)
 312126fa2834dc1cf3fd04de98e2d849fe52bba0:README.md:aws-access-token:263
+
+# Historical finding in AUDIT_FIX.md: unmasked documentation audit diff entries
+ca1a80027bd61ef1bf6ff45553fd3d945cab6b0c:AUDIT_FIX.md:aws-access-token:116
+ca1a80027bd61ef1bf6ff45553fd3d945cab6b0c:AUDIT_FIX.md:aws-access-token:210
+
